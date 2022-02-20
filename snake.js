@@ -142,6 +142,31 @@ document.addEventListener('keydown', (e) => {
 })
 
 
+getApplicableAction = () => {
+    switch (previousDirection) {
+        case keyCodes.RIGHT:
+            return keyCodes.ARROW_RIGHT
+
+        case keyCodes.LEFT:
+            return keyCodes.ARROW_LEFT
+
+
+        case keyCodes.UP:
+            return keyCodes.ARROW_UP
+
+        case keyCodes.DOWN:
+            return keyCodes.ARROW_DOWN
+    }
+}
+
+
+getApplicableSpeed = () => {
+    if (snake.length > 5)
+        return 1000
+    else return 1200
+}
+setInterval(() => handleEvent(getApplicableAction()),600)
+
 
 
 
