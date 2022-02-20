@@ -40,27 +40,53 @@ var previousDirection = keyCodes.RIGHT
 
 drawSnake()
 handleEvent = (key) => {
+    debugger
     switch (key) {
         case keyCodes.ARROW_UP: {
 
-            if (previousDirection !== keyCodes.ARROW_DOWN && previousDirection !== keyCodes.ARROW_UP) {
+            if (previousDirection !== keyCodes.DOWN) {
                 let last = snake[snake.length - 1]
-                snake.push({ x: last.x, y: last.y + 1 })
+                snake.push({ x: last.x, y: last.y - 1 })
+                previousDirection = keyCodes.UP
                 snake.shift()
                 drawSnake()
             }
-
+            break;
         }
 
         case keyCodes.ARROW_DOWN: {
+            if (previousDirection !== keyCodes.UP) {
+                let last = snake[snake.length - 1]
+                snake.push({ x: last.x, y: last.y + 1 })
+                previousDirection = keyCodes.DOWN
+                snake.shift()
+                drawSnake()
+            }
+            break;
 
         }
 
         case keyCodes.ARROW_LEFT: {
+            if (previousDirection !== keyCodes.RIGHT) {
+                let last = snake[snake.length - 1]
+                snake.push({ x: last.x - 1, y: last.y })
+                previousDirection = keyCodes.LEFT
+                snake.shift()
+                drawSnake()
+            }
+            break;
 
         }
 
         case keyCodes.ARROW_RIGHT: {
+            if (previousDirection !== keyCodes.LEFT) {
+                let last = snake[snake.length - 1]
+                snake.push({ x: last.x + 1, y: last.y })
+                previousDirection = keyCodes.RIGHT
+                snake.shift()
+                drawSnake()
+            }
+            break;
 
         }
 
