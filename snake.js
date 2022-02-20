@@ -8,7 +8,7 @@ const keyCodes = {
     UP: 'UP',
     DOWN: 'DOWN'
 }
-
+var target = { x: 5, y: 5 }
 var view = document.getElementById('container')
 
 for (let i = 0; i < 20; i++) {
@@ -25,8 +25,16 @@ const clear = () => {
     for (let i = 0; i < elements.length; i++) {
         elements[i].setAttribute('style', 'background-color:white')
     }
+    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:green')
+
 }
 
+const isTargetHit = (pos) => {
+    debugger
+    if (pos.x === target.x && pos.y === target.y)
+        return true
+    else false
+}
 
 const drawSnake = () => {
     clear()
@@ -35,18 +43,33 @@ const drawSnake = () => {
         x.setAttribute('style', 'background-color:red')
     })
 }
-var snake = [{ x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }]
+
+const createRandomTarget = (row, col) => {
+
+    let x = Math.floor(Math.random() * row)
+    let y = Math.floor(Math.random() * col)
+    target = { x, y }
+    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:green')
+}
+
+
+var snake = [{ x: 2, y: 3 }, { x: 3, y: 3 }]
 var previousDirection = keyCodes.RIGHT
 
 drawSnake()
 handleEvent = (key) => {
-    debugger
     switch (key) {
         case keyCodes.ARROW_UP: {
 
             if (previousDirection !== keyCodes.DOWN) {
                 let last = snake[snake.length - 1]
                 snake.push({ x: last.x, y: last.y - 1 })
+                if (isTargetHit({ x: last.x, y: last.y - 1 })) {
+                    snake.push({ x: last.x, y: last.y - 2 })
+                    createRandomTarget(18, 18)
+                    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:white')
+
+                }
                 previousDirection = keyCodes.UP
                 snake.shift()
                 drawSnake()
@@ -58,6 +81,13 @@ handleEvent = (key) => {
             if (previousDirection !== keyCodes.UP) {
                 let last = snake[snake.length - 1]
                 snake.push({ x: last.x, y: last.y + 1 })
+                if (isTargetHit({ x: last.x, y: last.y + 1 })) {
+                    snake.push({ x: last.x, y: last.y + 2 })
+                    createRandomTarget(18, 18)
+                    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:white')
+
+
+                }
                 previousDirection = keyCodes.DOWN
                 snake.shift()
                 drawSnake()
@@ -70,6 +100,13 @@ handleEvent = (key) => {
             if (previousDirection !== keyCodes.RIGHT) {
                 let last = snake[snake.length - 1]
                 snake.push({ x: last.x - 1, y: last.y })
+                if (isTargetHit({ x: last.x - 1, y: last.y })) {
+                    snake.push({ x: last.x - 2, y: last.y })
+                    createRandomTarget(18, 18)
+                    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:white')
+
+
+                }
                 previousDirection = keyCodes.LEFT
                 snake.shift()
                 drawSnake()
@@ -82,6 +119,12 @@ handleEvent = (key) => {
             if (previousDirection !== keyCodes.LEFT) {
                 let last = snake[snake.length - 1]
                 snake.push({ x: last.x + 1, y: last.y })
+                if (isTargetHit({ x: last.x + 1, y: last.y })) {
+                    snake.push({ x: last.x + 2, y: last.y })
+                    createRandomTarget(18, 18)
+                    document.getElementById(JSON.stringify(target)).setAttribute('style', 'background-color:white')
+
+                }
                 previousDirection = keyCodes.RIGHT
                 snake.shift()
                 drawSnake()
